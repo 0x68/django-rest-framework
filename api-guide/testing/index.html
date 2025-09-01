@@ -53,7 +53,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="repo-link btn btn-primary btn-small" href="https://github.com/encode/django-rest-framework/tree/master">GitHub</a>
+          <a class="repo-link btn btn-primary btn-small" href="https://github.com/encode/django-rest-framework">GitHub</a>
           <a class="repo-link btn btn-inverse btn-small " rel="next" href="../settings/">
             Next <i class="icon-arrow-right icon-white"></i>
           </a>
@@ -552,7 +552,7 @@
             
               
                 
-                  <a class="github" href="https://github.com/encode/django-rest-framework/tree/master/rest_framework/test.py">
+                  <a class="github" href="https://github.com/encode/django-rest-framework/tree/main/rest_framework/test.py">
                     <span class="label label-info">test.py</span>
                   </a>
                 
@@ -633,6 +633,19 @@ force_authenticate(request, user=user, token=user.auth_token)
 request = factory.get('/accounts/django-superstars/')
 request.user = user
 response = view(request)
+</code></pre>
+<p>If you want to test a request involving the REST framework’s 'Request' object, you’ll need to manually transform it first:</p>
+<pre><code>class DummyView(APIView):
+    ...
+
+factory = APIRequestFactory()
+request = factory.get('/', {'demo': 'test'})
+drf_request = DummyView().initialize_request(request)
+assert drf_request.query_params == {'demo': ['test']}
+
+request = factory.post('/', {'example': 'test'})
+drf_request = DummyView().initialize_request(request)
+assert drf_request.data.get('example') == 'test'
 </code></pre>
 <hr />
 <h2 id="forcing-csrf-validation"><a class="toclink" href="#forcing-csrf-validation">Forcing CSRF validation</a></h2>
@@ -718,7 +731,7 @@ assert response.status_code == 200
 <p>If you're using <code>RequestsClient</code> you'll want to ensure that test setup, and results assertions are performed as regular API calls, rather than interacting with the database models directly. For example, rather than checking that <code>Customer.objects.count() == 3</code> you would list the customers endpoint, and ensure that it contains three records.</p>
 <h2 id="headers-authentication"><a class="toclink" href="#headers-authentication">Headers &amp; Authentication</a></h2>
 <p>Custom headers and authentication credentials can be provided in the same way
-as <a href="https://requests.readthedocs.io/en/master/user/advanced/#session-objects">when using a standard <code>requests.Session</code> instance</a>.</p>
+as <a href="https://requests.readthedocs.io/en/latest/user/advanced/#session-objects">when using a standard <code>requests.Session</code> instance</a>.</p>
 <pre><code>from requests.auth import HTTPBasicAuth
 
 client.auth = HTTPBasicAuth('user', 'pass')
