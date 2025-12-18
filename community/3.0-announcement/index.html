@@ -16,6 +16,9 @@
   <link href="../../css/bootstrap.css" rel="stylesheet">
   <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
   <link href="../../css/default.css" rel="stylesheet">
+  
+    <link href="../../css/copy-button.css" rel="stylesheet">
+  
 
 
   <script type="text/javascript">
@@ -363,10 +366,6 @@
                   
                   <li >
                     <a href="../mozilla-grant/">Mozilla Grant</a>
-                  </li>
-                  
-                  <li >
-                    <a href="../funding/">Funding</a>
                   </li>
                   
                   <li >
@@ -974,7 +973,7 @@ def all_high_scores(request):
 <p>The <code>MultipleChoiceField</code> class has been added. This field acts like <code>ChoiceField</code>, but returns a set, which may include none, one or many of the valid choices.</p>
 <h4 id="changes-to-the-custom-field-api"><a class="toclink" href="#changes-to-the-custom-field-api">Changes to the custom field API.</a></h4>
 <p>The <code>from_native(self, value)</code> and <code>to_native(self, data)</code> method names have been replaced with the more obviously named <code>to_internal_value(self, data)</code> and <code>to_representation(self, value)</code>.</p>
-<p>The <code>field_from_native()</code> and <code>field_to_native()</code> methods are removed. Previously you could use these methods if you wanted to customise the behavior in a way that did not simply lookup the field value from the object. For example...</p>
+<p>The <code>field_from_native()</code> and <code>field_to_native()</code> methods are removed. Previously you could use these methods if you wanted to customize the behavior in a way that did not simply lookup the field value from the object. For example...</p>
 <pre><code>def field_to_native(self, obj, field_name):
     """A custom read-only field that returns the class name."""
     return obj.__class__.__name__
@@ -1240,6 +1239,8 @@ amount = serializers.DecimalField(
   <script src="../../js/theme.js"></script>
 
   <script>var base_url = '../..';</script>
+  
+  <script src="../../js/copy-button.js" defer></script>
   
   <script src="../../search/main.js" defer></script>
   

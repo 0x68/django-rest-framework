@@ -16,6 +16,9 @@
   <link href="../../css/bootstrap.css" rel="stylesheet">
   <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
   <link href="../../css/default.css" rel="stylesheet">
+  
+    <link href="../../css/copy-button.css" rel="stylesheet">
+  
 
 
   <script type="text/javascript">
@@ -366,10 +369,6 @@
                   </li>
                   
                   <li >
-                    <a href="../../community/funding/">Funding</a>
-                  </li>
-                  
-                  <li >
                     <a href="../../community/jobs/">Jobs</a>
                   </li>
                   
@@ -556,11 +555,13 @@
 <p>&mdash; <a href="http://users.ece.utexas.edu/~adnan/pike.html">Rob Pike</a></p>
 </blockquote>
 <p>Relational fields are used to represent model relationships.  They can be applied to <code>ForeignKey</code>, <code>ManyToManyField</code> and <code>OneToOneField</code> relationships, as well as to reverse relationships, and custom relationships such as <code>GenericForeignKey</code>.</p>
-<hr />
-<p><strong>Note:</strong> The relational fields are declared in <code>relations.py</code>, but by convention you should import them from the <code>serializers</code> module, using <code>from rest_framework import serializers</code> and refer to fields as <code>serializers.&lt;FieldName&gt;</code>.</p>
-<hr />
-<hr />
-<p><strong>Note:</strong> REST Framework does not attempt to automatically optimize querysets passed to serializers in terms of <code>select_related</code> and <code>prefetch_related</code> since it would be too much magic. A serializer with a field spanning an orm relation through its source attribute could require an additional database hit to fetch related objects from the database. It is the programmer's responsibility to optimize queries to avoid additional database hits which could occur while using such a serializer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The relational fields are declared in <code>relations.py</code>, but by convention you should import them from the <code>serializers</code> module, using <code>from rest_framework import serializers</code> and refer to fields as <code>serializers.&lt;FieldName&gt;</code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>REST Framework does not attempt to automatically optimize querysets passed to serializers in terms of <code>select_related</code> and <code>prefetch_related</code> since it would be too much magic. A serializer with a field spanning an ORM relation through its source attribute could require an additional database hit to fetch related objects from the database. It is the programmer's responsibility to optimize queries to avoid additional database hits which could occur while using such a serializer.</p>
 <p>For example, the following serializer would lead to a database hit each time evaluating the tracks field if it is not prefetched:</p>
 <pre><code>class AlbumSerializer(serializers.ModelSerializer):
     tracks = serializers.SlugRelatedField(
@@ -583,7 +584,7 @@ print(AlbumSerializer(qs, many=True).data)
 print(AlbumSerializer(qs, many=True).data)
 </code></pre>
 <p>would solve the issue.</p>
-<hr />
+</div>
 <h4 id="inspecting-relationships"><a class="toclink" href="#inspecting-relationships">Inspecting relationships.</a></h4>
 <p>When using the <code>ModelSerializer</code> class, serializer fields and relationships will be automatically generated for you. Inspecting these automatically generated fields can be a useful tool for determining how to customize the relationship style.</p>
 <p>To do so, open the Django shell, using <code>python manage.py shell</code>, then import the serializer class, instantiate it, and print the object representation…</p>
@@ -698,11 +699,12 @@ class Track(models.Model):
 }
 </code></pre>
 <p>By default this field is read-write, although you can change this behavior using the <code>read_only</code> flag.</p>
-<hr />
-<p><strong>Note</strong>: This field is designed for objects that map to a URL that accepts a single URL keyword argument, as set using the <code>lookup_field</code> and <code>lookup_url_kwarg</code> arguments.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This field is designed for objects that map to a URL that accepts a single URL keyword argument, as set using the <code>lookup_field</code> and <code>lookup_url_kwarg</code> arguments.</p>
 <p>This is suitable for URLs that contain a single primary key or slug argument as part of the URL.</p>
 <p>If you require more complex hyperlinked representation you'll need to customize the field, as described in the <a href="#custom-hyperlinked-fields">custom hyperlinked fields</a> section, below.</p>
-<hr />
+</div>
 <p><strong>Arguments</strong>:</p>
 <ul>
 <li><code>view_name</code> - The view name that should be used as the target of the relationship.  If you're using <a href="https://www.django-rest-framework.org/api-guide/routers#defaultrouter">the standard router classes</a> this will be a string with the format <code>&lt;modelname&gt;-detail</code>. <strong>required</strong>.</li>
@@ -793,7 +795,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         fields = ['album_name', 'artist', 'tracks']
 </code></pre>
 <p>Would serialize to a nested representation like this:</p>
-<pre><code>&gt;&gt;&gt; album = Album.objects.create(album_name="The Grey Album", artist='Danger Mouse')
+<pre><code>&gt;&gt;&gt; album = Album.objects.create(album_name="The Gray Album", artist='Danger Mouse')
 &gt;&gt;&gt; Track.objects.create(album=album, order=1, title='Public Service Announcement', duration=245)
 &lt;Track: Track object&gt;
 &gt;&gt;&gt; Track.objects.create(album=album, order=2, title='What More Can I Say', duration=264)
@@ -803,7 +805,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 &gt;&gt;&gt; serializer = AlbumSerializer(instance=album)
 &gt;&gt;&gt; serializer.data
 {
-    'album_name': 'The Grey Album',
+    'album_name': 'The Gray Album',
     'artist': 'Danger Mouse',
     'tracks': [
         {'order': 1, 'title': 'Public Service Announcement', 'duration': 245},
@@ -835,7 +837,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         return album
 
 &gt;&gt;&gt; data = {
-    'album_name': 'The Grey Album',
+    'album_name': 'The Gray Album',
     'artist': 'Danger Mouse',
     'tracks': [
         {'order': 1, 'title': 'Public Service Announcement', 'duration': 245},
@@ -1079,6 +1081,8 @@ to <code>True</code>.</p>
   <script src="../../js/theme.js"></script>
 
   <script>var base_url = '../..';</script>
+  
+  <script src="../../js/copy-button.js" defer></script>
   
   <script src="../../search/main.js" defer></script>
   

@@ -16,6 +16,9 @@
   <link href="../../css/bootstrap.css" rel="stylesheet">
   <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
   <link href="../../css/default.css" rel="stylesheet">
+  
+    <link href="../../css/copy-button.css" rel="stylesheet">
+  
 
 
   <script type="text/javascript">
@@ -366,10 +369,6 @@
                   </li>
                   
                   <li >
-                    <a href="../funding/">Funding</a>
-                  </li>
-                  
-                  <li >
                     <a href="../jobs/">Jobs</a>
                   </li>
                   
@@ -484,7 +483,7 @@ are likely in the composite fields, <code>ListField</code> and <code>DictField</
 <p>They must now use the more explicit keyword argument style...</p>
 <pre><code class="language-python">aliases = serializers.ListField(child=serializers.CharField())
 </code></pre>
-<p>This change has been made because using positional arguments here <em>does not</em> result in the expected behaviour.</p>
+<p>This change has been made because using positional arguments here <em>does not</em> result in the expected behavior.</p>
 <p>See Pull Request <a href="https://github.com/encode/django-rest-framework/pull/7632">#7632</a> for more details.</p>
             
 
@@ -510,6 +509,8 @@ are likely in the composite fields, <code>ListField</code> and <code>DictField</
   <script src="../../js/theme.js"></script>
 
   <script>var base_url = '../..';</script>
+  
+  <script src="../../js/copy-button.js" defer></script>
   
   <script src="../../search/main.js" defer></script>
   

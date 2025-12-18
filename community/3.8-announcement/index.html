@@ -16,6 +16,9 @@
   <link href="../../css/bootstrap.css" rel="stylesheet">
   <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
   <link href="../../css/default.css" rel="stylesheet">
+  
+    <link href="../../css/copy-button.css" rel="stylesheet">
+  
 
 
   <script type="text/javascript">
@@ -366,10 +369,6 @@
                   </li>
                   
                   <li >
-                    <a href="../funding/">Funding</a>
-                  </li>
-                  
-                  <li >
                     <a href="../jobs/">Jobs</a>
                   </li>
                   
@@ -481,16 +480,16 @@ the foundations for future changes.</p>
 <hr />
 <h2 id="funding"><a class="toclink" href="#funding">Funding</a></h2>
 <p>If you use REST framework commercially and would like to see this work continue, we strongly encourage you to invest in its continued development by
-<strong><a href="../funding/">signing up for a paid&nbsp;plan</a></strong>.</p>
+<strong><a href="funding.md">signing up for a paid&nbsp;plan</a></strong>.</p>
 <p><em>We'd like to say thanks in particular our premium backers, <a href="https://www.rover.com/careers/">Rover</a>, <a href="https://sentry.io/welcome/">Sentry</a>, <a href="https://getstream.io/?utm_source=drf&amp;utm_medium=banner&amp;utm_campaign=drf">Stream</a>, <a href="https://machinalis.com/">Machinalis</a>, and <a href="https://rollbar.com">Rollbar</a>.</em></p>
 <hr />
 <h2 id="breaking-changes"><a class="toclink" href="#breaking-changes">Breaking Changes</a></h2>
-<h3 id="altered-the-behaviour-of-read_only-plus-default-on-field"><a class="toclink" href="#altered-the-behaviour-of-read_only-plus-default-on-field">Altered the behaviour of <code>read_only</code> plus <code>default</code> on Field.</a></h3>
+<h3 id="altered-the-behavior-of-read_only-plus-default-on-field"><a class="toclink" href="#altered-the-behavior-of-read_only-plus-default-on-field">Altered the behavior of <code>read_only</code> plus <code>default</code> on Field.</a></h3>
 <p><a href="https://github.com/encode/django-rest-framework/issues/5886">#5886</a> <code>read_only</code> fields will now <strong>always</strong> be excluded from writable fields.</p>
 <p>Previously <code>read_only</code> fields when combined with a <code>default</code> value would use the <code>default</code> for create and update
 operations. This was counter-intuitive in some circumstances and led to difficulties supporting dotted <code>source</code>
 attributes on nullable relations.</p>
-<p>In order to maintain the old behaviour you may need to pass the value of <code>read_only</code> fields when calling <code>save()</code> in
+<p>In order to maintain the old behavior you may need to pass the value of <code>read_only</code> fields when calling <code>save()</code> in
 the view:</p>
 <pre><code>def perform_create(self, serializer):
     serializer.save(owner=self.request.user)
@@ -542,6 +541,8 @@ for a complete listing.</p>
   <script src="../../js/theme.js"></script>
 
   <script>var base_url = '../..';</script>
+  
+  <script src="../../js/copy-button.js" defer></script>
   
   <script src="../../search/main.js" defer></script>
   

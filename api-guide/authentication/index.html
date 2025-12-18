@@ -16,6 +16,9 @@
   <link href="../../css/bootstrap.css" rel="stylesheet">
   <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
   <link href="../../css/default.css" rel="stylesheet">
+  
+    <link href="../../css/copy-button.css" rel="stylesheet">
+  
 
 
   <script type="text/javascript">
@@ -366,10 +369,6 @@
                   </li>
                   
                   <li >
-                    <a href="../../community/funding/">Funding</a>
-                  </li>
-                  
-                  <li >
                     <a href="../../community/jobs/">Jobs</a>
                   </li>
                   
@@ -508,6 +507,10 @@
                     </li>
                   
                     <li>
+                      <a href="#drf-auth-kit">DRF Auth Kit</a>
+                    </li>
+                  
+                    <li>
                       <a href="#django-rest-auth-dj-rest-auth">django-rest-auth / dj-rest-auth</a>
                     </li>
                   
@@ -562,10 +565,11 @@
 <p>Authentication always runs at the very start of the view, before the permission and throttling checks occur, and before any other code is allowed to proceed.</p>
 <p>The <code>request.user</code> property will typically be set to an instance of the <code>contrib.auth</code> package's <code>User</code> class.</p>
 <p>The <code>request.auth</code> property is used for any additional authentication information, for example, it may be used to represent an authentication token that the request was signed with.</p>
-<hr />
-<p><strong>Note:</strong> Don't forget that <strong>authentication by itself won't allow or disallow an incoming request</strong>, it simply identifies the credentials that the request was made with.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Don't forget that <strong>authentication by itself won't allow or disallow an incoming request</strong>, it simply identifies the credentials that the request was made with.</p>
 <p>For information on how to set up the permission policies for your API please see the <a href="../permissions/">permissions documentation</a>.</p>
-<hr />
+</div>
 <h2 id="how-authentication-is-determined"><a class="toclink" href="#how-authentication-is-determined">How authentication is determined</a></h2>
 <p>The authentication schemes are always defined as a list of classes.  REST framework will attempt to authenticate with each class in the list, and will set <code>request.user</code> and <code>request.auth</code> using the return value of the first class that successfully authenticates.</p>
 <p>If no class authenticates, <code>request.user</code> will be set to an instance of <code>django.contrib.auth.models.AnonymousUser</code>, and <code>request.auth</code> will be set to <code>None</code>.</p>
@@ -638,12 +642,16 @@ WSGIPassAuthorization On
 <p>Unauthenticated responses that are denied permission will result in an <code>HTTP 401 Unauthorized</code> response with an appropriate WWW-Authenticate header.  For example:</p>
 <pre><code>WWW-Authenticate: Basic realm="api"
 </code></pre>
-<p><strong>Note:</strong> If you use <code>BasicAuthentication</code> in production you must ensure that your API is only available over <code>https</code>.  You should also ensure that your API clients will always re-request the username and password at login, and will never store those details to persistent storage.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use <code>BasicAuthentication</code> in production you must ensure that your API is only available over <code>https</code>.  You should also ensure that your API clients will always re-request the username and password at login, and will never store those details to persistent storage.</p>
+</div>
 <h2 id="tokenauthentication"><a class="toclink" href="#tokenauthentication">TokenAuthentication</a></h2>
-<hr />
-<p><strong>Note:</strong> The token authentication provided by Django REST framework is a fairly simple implementation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The token authentication provided by Django REST framework is a fairly simple implementation.</p>
 <p>For an implementation which allows more than one token per user, has some tighter security implementation details, and supports token expiry, please see the <a href="https://github.com/James1345/django-rest-knox">Django REST Knox</a> third party package.</p>
-<hr />
+</div>
 <p>This authentication scheme uses a simple token-based HTTP Authentication scheme.  Token authentication is appropriate for client-server setups, such as native desktop and mobile clients.</p>
 <p>To use the <code>TokenAuthentication</code> scheme you'll need to <a href="#setting-the-authentication-scheme">configure the authentication classes</a> to include <code>TokenAuthentication</code>, and additionally include <code>rest_framework.authtoken</code> in your <code>INSTALLED_APPS</code> setting:</p>
 <pre><code>INSTALLED_APPS = [
@@ -674,9 +682,10 @@ print(token.key)
 <p>The <code>curl</code> command line tool may be useful for testing token authenticated APIs.  For example:</p>
 <pre><code>curl -X GET http://127.0.0.1:8000/api/example/ -H 'Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'
 </code></pre>
-<hr />
-<p><strong>Note:</strong> If you use <code>TokenAuthentication</code> in production you must ensure that your API is only available over <code>https</code>.</p>
-<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use <code>TokenAuthentication</code> in production you must ensure that your API is only available over <code>https</code>.</p>
+</div>
 <h3 id="generating-tokens"><a class="toclink" href="#generating-tokens">Generating Tokens</a></h3>
 <h4 id="by-using-signals"><a class="toclink" href="#by-using-signals">By using signals</a></h4>
 <p>If you want every user to have an automatically generated Token, you can simply catch the User's <code>post_save</code> signal.</p>
@@ -763,7 +772,10 @@ TokenAdmin.raw_id_fields = ['user']
 </ul>
 <p>Unauthenticated responses that are denied permission will result in an <code>HTTP 403 Forbidden</code> response.</p>
 <p>If you're using an AJAX-style API with SessionAuthentication, you'll need to make sure you include a valid CSRF token for any "unsafe" HTTP method calls, such as <code>PUT</code>, <code>PATCH</code>, <code>POST</code> or <code>DELETE</code> requests.  See the <a href="https://docs.djangoproject.com/en/stable/howto/csrf/#using-csrf-protection-with-ajax">Django CSRF documentation</a> for more details.</p>
-<p><strong>Warning</strong>: Always use Django's standard login view when creating login pages. This will ensure your login views are properly protected.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always use Django's standard login view when creating login pages. This will ensure your login views are properly protected.</p>
+</div>
 <p>CSRF validation in REST framework works slightly differently from standard Django due to the need to support both session and non-session based authentication to the same views. This means that only authenticated requests require CSRF tokens, and anonymous requests may be sent without CSRF tokens. This behavior is not suitable for login views, which should always have CSRF validation applied.</p>
 <h2 id="remoteuserauthentication"><a class="toclink" href="#remoteuserauthentication">RemoteUserAuthentication</a></h2>
 <p>This authentication scheme allows you to delegate authentication to your web server, which sets the <code>REMOTE_USER</code>
@@ -792,9 +804,10 @@ already exist. To change this and other behavior, consult the
 </ul>
 <p>You <em>may</em> also override the <code>.authenticate_header(self, request)</code> method.  If implemented, it should return a string that will be used as the value of the <code>WWW-Authenticate</code> header in a <code>HTTP 401 Unauthorized</code> response.</p>
 <p>If the <code>.authenticate_header()</code> method is not overridden, the authentication scheme will return <code>HTTP 403 Forbidden</code> responses when an unauthenticated request is denied access.</p>
-<hr />
-<p><strong>Note:</strong> When your custom authenticator is invoked by the request object's <code>.user</code> or <code>.auth</code> properties, you may see an <code>AttributeError</code> re-raised as a <code>WrappedAttributeError</code>. This is necessary to prevent the original exception from being suppressed by the outer property access. Python will not recognize that the <code>AttributeError</code> originates from your custom authenticator and will instead assume that the request object does not have a <code>.user</code> or <code>.auth</code> property. These errors should be fixed or otherwise handled by your authenticator.</p>
-<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When your custom authenticator is invoked by the request object's <code>.user</code> or <code>.auth</code> properties, you may see an <code>AttributeError</code> re-raised as a <code>WrappedAttributeError</code>. This is necessary to prevent the original exception from being suppressed by the outer property access. Python will not recognize that the <code>AttributeError</code> originates from your custom authenticator and will instead assume that the request object does not have a <code>.user</code> or <code>.auth</code> property. These errors should be fixed or otherwise handled by your authenticator.</p>
+</div>
 <h2 id="example"><a class="toclink" href="#example">Example</a></h2>
 <p>The following example will authenticate any incoming request as the user given by the username in a custom request header named 'X-USERNAME'.</p>
 <pre><code>from django.contrib.auth.models import User
@@ -854,6 +867,8 @@ REST_FRAMEWORK = {
 <p>HTTP Signature (currently a <a href="https://datatracker.ietf.org/doc/draft-cavage-http-signatures/">IETF draft</a>) provides a way to achieve origin authentication and message integrity for HTTP messages. Similar to <a href="https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html">Amazon's HTTP Signature scheme</a>, used by many of its services, it permits stateless, per-request authentication. <a href="https://github.com/etoccalino/">Elvio Toccalino</a> maintains the <a href="https://github.com/etoccalino/django-rest-framework-httpsignature">djangorestframework-httpsignature</a> (outdated) package which provides an easy-to-use HTTP Signature Authentication mechanism. You can use the updated fork version of <a href="https://github.com/etoccalino/django-rest-framework-httpsignature">djangorestframework-httpsignature</a>, which is <a href="https://github.com/ahknight/drf-httpsig">drf-httpsig</a>.</p>
 <h2 id="djoser"><a class="toclink" href="#djoser">Djoser</a></h2>
 <p><a href="https://github.com/sunscrapers/djoser">Djoser</a> library provides a set of views to handle basic actions such as registration, login, logout, password reset and account activation. The package works with a custom user model and uses token-based authentication. This is a ready to use REST implementation of the Django authentication system.</p>
+<h2 id="drf-auth-kit"><a class="toclink" href="#drf-auth-kit">DRF Auth Kit</a></h2>
+<p><a href="https://github.com/huynguyengl99/drf-auth-kit">DRF Auth Kit</a> library provides a modern REST authentication solution with JWT cookies, social login, multi-factor authentication, and comprehensive user management. The package offers full type safety, automatic OpenAPI schema generation with DRF Spectacular. It supports multiple authentication types (JWT, DRF Token, or Custom) and includes built-in internationalization for 50+ languages.</p>
 <h2 id="django-rest-auth-dj-rest-auth"><a class="toclink" href="#django-rest-auth-dj-rest-auth">django-rest-auth / dj-rest-auth</a></h2>
 <p>This library provides a set of REST API endpoints for registration, authentication (including social media authentication), password reset, retrieve and update user details, etc. By having these API endpoints, your client apps such as AngularJS, iOS, Android, and others can communicate to your Django backend site independently via REST APIs for user management.</p>
 <p>There are currently two forks of this project.</p>
@@ -871,9 +886,8 @@ REST_FRAMEWORK = {
 <p><a href="https://github.com/eshaan7/django-rest-durin">Django-Rest-Durin</a> is built with the idea to have one library that does token auth for multiple Web/CLI/Mobile API clients via one interface but allows different token configuration for each API Client that consumes the API. It provides support for multiple tokens per user via custom models, views, permissions that work with Django-Rest-Framework. The token expiration time can be different per API client and is customizable via the Django Admin Interface.</p>
 <p>More information can be found in the <a href="https://django-rest-durin.readthedocs.io/en/latest/index.html">Documentation</a>.</p>
 <h2 id="django-pyoidc"><a class="toclink" href="#django-pyoidc">django-pyoidc</a></h2>
-<p>[dango-pyoidc][django_pyoidc] adds support for OpenID Connect (OIDC) authentication. This allows you to delegate user management to an Identity Provider, which can be used to implement Single-Sign-On (SSO). It provides support for most uses-cases, such as customizing how token info are mapped to user models, using OIDC audiences for access control, etc.</p>
+<p><a href="https://github.com/makinacorpus/django_pyoidc">django_pyoidc</a> adds support for OpenID Connect (OIDC) authentication. This allows you to delegate user management to an Identity Provider, which can be used to implement Single-Sign-On (SSO). It provides support for most uses-cases, such as customizing how token info are mapped to user models, using OIDC audiences for access control, etc.</p>
 <p>More information can be found in the <a href="https://django-pyoidc.readthedocs.io/latest/index.html">Documentation</a>.</p>
-<p>[django-pyoidc] : https://github.com/makinacorpus/django_pyoidc</p>
             
 
           </div> <!--/span-->
@@ -898,6 +912,8 @@ REST_FRAMEWORK = {
   <script src="../../js/theme.js"></script>
 
   <script>var base_url = '../..';</script>
+  
+  <script src="../../js/copy-button.js" defer></script>
   
   <script src="../../search/main.js" defer></script>
   

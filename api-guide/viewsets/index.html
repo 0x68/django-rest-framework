@@ -16,6 +16,9 @@
   <link href="../../css/bootstrap.css" rel="stylesheet">
   <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
   <link href="../../css/default.css" rel="stylesheet">
+  
+    <link href="../../css/copy-button.css" rel="stylesheet">
+  
 
 
   <script type="text/javascript">
@@ -366,10 +369,6 @@
                   </li>
                   
                   <li >
-                    <a href="../../community/funding/">Funding</a>
-                  </li>
-                  
-                  <li >
                     <a href="../../community/jobs/">Jobs</a>
                   </li>
                   
@@ -538,6 +537,10 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user')
 urlpatterns = router.urls
 </code></pre>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not use <code>.as_view()</code> with <code>@action</code> methods. It bypasses router setup and may ignore action settings like <code>permission_classes</code>. Use <code>DefaultRouter</code> for actions.</p>
+</div>
 <p>Rather than writing your own viewsets, you'll often want to use the existing base classes that provide a default set of behavior.  For example:</p>
 <pre><code>class UserViewSet(viewsets.ModelViewSet):
     """
@@ -602,7 +605,10 @@ urlpatterns = router.urls
         permission_classes = [IsAdminUser]
     return [permission() for permission in permission_classes]
 </code></pre>
-<p><strong>Note</strong>: the <code>action</code> attribute is not available in the <code>get_parsers</code>, <code>get_authenticators</code> and <code>get_content_negotiator</code> methods, as it is set <em>after</em> they are called in the framework lifecycle. If you override one of these methods and try to access the <code>action</code> attribute in them, you will get an <code>AttributeError</code> error.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>action</code> attribute is not available in the <code>get_parsers</code>, <code>get_authenticators</code> and <code>get_content_negotiator</code> methods, as it is set <em>after</em> they are called in the framework lifecycle. If you override one of these methods and try to access the <code>action</code> attribute in them, you will get an <code>AttributeError</code> error.</p>
+</div>
 <h2 id="marking-extra-actions-for-routing"><a class="toclink" href="#marking-extra-actions-for-routing">Marking extra actions for routing</a></h2>
 <p>If you have ad-hoc methods that should be routable, you can mark them as such with the <code>@action</code> decorator. Like regular actions, extra actions may be intended for either a single object, or an entire collection. To indicate this, set the <code>detail</code> argument to <code>True</code> or <code>False</code>. The router will configure its URL patterns accordingly. e.g., the <code>DefaultRouter</code> will configure detail actions to contain <code>pk</code> in their URL patterns.</p>
 <p>A more complete example of extra actions:</p>
@@ -683,7 +689,7 @@ def delete_password(self, request, pk=None):
 'http://localhost:8000/api/users/1/set_password'
 </code></pre>
 <p>Alternatively, you can use the <code>url_name</code> attribute set by the <code>@action</code> decorator.</p>
-<pre><code class="language-pycon">&gt;&gt;&gt; view.reverse_action(view.set_password.url_name, args=['1'])
+<pre><code class="language-pycon">&gt;&gt;&gt; view.reverse_action(view.set_password.url_name, args=[&quot;1&quot;])
 'http://localhost:8000/api/users/1/set_password'
 </code></pre>
 <p>The <code>url_name</code> argument for <code>.reverse_action()</code> should match the same argument to the <code>@action</code> decorator. Additionally, this method can be used to reverse the default actions, such as <code>list</code> and <code>create</code>.</p>
@@ -777,6 +783,8 @@ class CreateListRetrieveViewSet(mixins.CreateModelMixin,
   <script src="../../js/theme.js"></script>
 
   <script>var base_url = '../..';</script>
+  
+  <script src="../../js/copy-button.js" defer></script>
   
   <script src="../../search/main.js" defer></script>
   

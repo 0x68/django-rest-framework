@@ -16,6 +16,9 @@
   <link href="../../css/bootstrap.css" rel="stylesheet">
   <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
   <link href="../../css/default.css" rel="stylesheet">
+  
+    <link href="../../css/copy-button.css" rel="stylesheet">
+  
 
 
   <script type="text/javascript">
@@ -366,10 +369,6 @@
                   </li>
                   
                   <li >
-                    <a href="../../community/funding/">Funding</a>
-                  </li>
-                  
-                  <li >
                     <a href="../../community/jobs/">Jobs</a>
                   </li>
                   
@@ -471,7 +470,7 @@ functionality instead. The built-in support will be moved into a separate
 package and then subsequently retired over the next releases.</p>
 <p>As a full-fledged replacement, we recommend the <a href="https://drf-spectacular.readthedocs.io/en/latest/readme.html">drf-spectacular</a> package.
 It has extensive support for generating OpenAPI 3 schemas from
-REST framework APIs, with both automatic and customisable options available.
+REST framework APIs, with both automatic and customizable options available.
 For further information please refer to
 <a href="../../topics/documenting-your-api/#drf-spectacular">Documenting your API</a>.</p>
 <hr />
@@ -654,13 +653,14 @@ operation = auto_schema.get_operation(...)
 </code></pre>
 <p>In compiling the schema, <code>SchemaGenerator</code> calls <code>get_components()</code> and
 <code>get_operation()</code> for each view, allowed method, and path.</p>
-<hr />
-<p><strong>Note</strong>: The automatic introspection of components, and many operation
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The automatic introspection of components, and many operation
 parameters relies on the relevant attributes and methods of
 <code>GenericAPIView</code>: <code>get_serializer()</code>, <code>pagination_class</code>, <code>filter_backends</code>,
 etc. For basic <code>APIView</code> subclasses, default introspection is essentially limited to
 the URL kwarg path parameters for this reason.</p>
-<hr />
+</div>
 <p><code>AutoSchema</code> encapsulates the view introspection needed for schema generation.
 Because of this all the schema generation logic is kept in a single place,
 rather than being spread around the already extensive view, serializer and
@@ -831,6 +831,8 @@ create a base <code>AutoSchema</code> subclass for your project that takes addit
   <script src="../../js/theme.js"></script>
 
   <script>var base_url = '../..';</script>
+  
+  <script src="../../js/copy-button.js" defer></script>
   
   <script src="../../search/main.js" defer></script>
   

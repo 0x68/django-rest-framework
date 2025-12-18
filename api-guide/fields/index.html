@@ -16,6 +16,9 @@
   <link href="../../css/bootstrap.css" rel="stylesheet">
   <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
   <link href="../../css/default.css" rel="stylesheet">
+  
+    <link href="../../css/copy-button.css" rel="stylesheet">
+  
 
 
   <script type="text/javascript">
@@ -366,10 +369,6 @@
                   </li>
                   
                   <li >
-                    <a href="../../community/funding/">Funding</a>
-                  </li>
-                  
-                  <li >
                     <a href="../../community/jobs/">Jobs</a>
                   </li>
                   
@@ -481,6 +480,10 @@
                   
                     <li>
                       <a href="#integerfield">IntegerField</a>
+                    </li>
+                  
+                    <li>
+                      <a href="#bigintegerfield">BigIntegerField</a>
                     </li>
                   
                     <li>
@@ -652,9 +655,10 @@
 <p>&mdash; <a href="https://docs.djangoproject.com/en/stable/ref/forms/api/#django.forms.Form.cleaned_data">Django documentation</a></p>
 </blockquote>
 <p>Serializer fields handle converting between primitive values and internal datatypes.  They also deal with validating input values, as well as retrieving and setting the values from their parent objects.</p>
-<hr />
-<p><strong>Note:</strong> The serializer fields are declared in <code>fields.py</code>, but by convention you should import them using <code>from rest_framework import serializers</code> and refer to fields as <code>serializers.&lt;FieldName&gt;</code>.</p>
-<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The serializer fields are declared in <code>fields.py</code>, but by convention you should import them using <code>from rest_framework import serializers</code> and refer to fields as <code>serializers.&lt;FieldName&gt;</code>.</p>
+</div>
 <h2 id="core-arguments"><a class="toclink" href="#core-arguments">Core arguments</a></h2>
 <p>Each serializer field class constructor takes at least these arguments.  Some Field classes take additional, field-specific arguments, but the following should always be accepted:</p>
 <h3 id="read_only"><a class="toclink" href="#read_only"><code>read_only</code></a></h3>
@@ -759,7 +763,7 @@ explicitly declare the <code>BooleanField</code> on the serializer class, or use
 </ul>
 <p>The <code>allow_null</code> option is also available for string fields, although its usage is discouraged in favor of <code>allow_blank</code>. It is valid to set both <code>allow_blank=True</code> and <code>allow_null=True</code>, but doing so means that there will be two differing types of empty value permissible for string representations, which can lead to data inconsistencies and subtle application bugs.</p>
 <h2 id="emailfield"><a class="toclink" href="#emailfield">EmailField</a></h2>
-<p>A text representation, validates the text to be a valid e-mail address.</p>
+<p>A text representation, validates the text to be a valid email address.</p>
 <p>Corresponds to <code>django.db.models.fields.EmailField</code></p>
 <p><strong>Signature:</strong> <code>EmailField(max_length=None, min_length=None, allow_blank=False)</code></p>
 <h2 id="regexfield"><a class="toclink" href="#regexfield">RegexField</a></h2>
@@ -819,6 +823,15 @@ explicitly declare the <code>BooleanField</code> on the serializer class, or use
 <ul>
 <li><code>max_value</code> Validate that the number provided is no greater than this value.</li>
 <li><code>min_value</code> Validate that the number provided is no less than this value.</li>
+</ul>
+<h2 id="bigintegerfield"><a class="toclink" href="#bigintegerfield">BigIntegerField</a></h2>
+<p>A biginteger representation.</p>
+<p>Corresponds to <code>django.db.models.fields.BigIntegerField</code>.</p>
+<p><strong>Signature</strong>: <code>BigIntegerField(max_value=None, min_value=None, coerce_to_string=None)</code></p>
+<ul>
+<li><code>max_value</code> Validate that the number provided is no greater than this value.</li>
+<li><code>min_value</code> Validate that the number provided is no less than this value.</li>
+<li><code>coerce_to_string</code> Set to <code>True</code> if string values should be returned for the representation, or <code>False</code> if <code>BigInteger</code> objects should be returned. Defaults to the same value as the <code>COERCE_BIGINT_TO_STRING</code> settings key, which will be <code>False</code> unless overridden. If <code>BigInteger</code> objects are returned by the serializer, then the final output format will be determined by the renderer.</li>
 </ul>
 <h2 id="floatfield"><a class="toclink" href="#floatfield">FloatField</a></h2>
 <p>A floating point representation.</p>
@@ -1021,9 +1034,10 @@ Django's regular <a href="https://docs.djangoproject.com/en/stable/ref/settings/
 </code></pre>
 <p>The <code>HiddenField</code> class is usually only needed if you have some validation that needs to run based on some pre-provided field values, but you do not want to expose all of those fields to the end user.</p>
 <p>For further examples on <code>HiddenField</code> see the <a href="../validators/">validators</a> documentation.</p>
-<hr />
-<p><strong>Note:</strong> <code>HiddenField()</code> does not appear in <code>partial=True</code> serializer (when making <code>PATCH</code> request).</p>
-<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>HiddenField()</code> does not appear in <code>partial=True</code> serializer (when making <code>PATCH</code> request).</p>
+</div>
 <h2 id="modelfield"><a class="toclink" href="#modelfield">ModelField</a></h2>
 <p>A generic field that can be tied to any arbitrary model field. The <code>ModelField</code> class delegates the task of serialization/deserialization to its associated model field.  This field can be used to create serializer fields for custom model fields, without having to create a new custom serializer field.</p>
 <p>This field is used by <code>ModelSerializer</code> to correspond to custom model field classes.</p>
@@ -1204,7 +1218,7 @@ OrderedDict([('label', 'Second Example'),
 </code></pre>
 </li>
 </ul>
-<p>For completeness lets do the same thing again but with the nested serializer
+<p>For completeness let's do the same thing again but with the nested serializer
 approach suggested above:</p>
 <pre><code>class NestedCoordinateSerializer(serializers.Serializer):
     x = serializers.IntegerField(source='x_coordinate')
@@ -1293,6 +1307,8 @@ or overly complex.</p>
   <script src="../../js/theme.js"></script>
 
   <script>var base_url = '../..';</script>
+  
+  <script src="../../js/copy-button.js" defer></script>
   
   <script src="../../search/main.js" defer></script>
   
